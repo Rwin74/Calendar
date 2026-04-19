@@ -128,6 +128,63 @@ Vurgu renkleri `src/app/globals.css` içinde tanımlanmıştır. Değiştirmek i
 - `npm run start` - Production sunucusunu başlat
 - `npm run lint` - ESLint çalıştır
 
+## Vercel ile Yayına Alma
+
+### Vercel'e Deploy Etme
+
+1. **Vercel hesabı oluşturun**: [vercel.com](https://vercel.com) adresinden hesap oluşturun
+
+2. **GitHub ile bağlayın**: Vercel dashboard'ında GitHub hesabınızı bağlayın
+
+3. **Import Project**:
+   - Vercel dashboard'ında "Add New Project" tıklayın
+   - GitHub repository listenizden "Calendar" projesini seçin
+   - "Import" butonuna tıklayın
+
+4. **Environment Variables Ayarlayın**:
+   - Project Settings → Environment Variables
+   - Aşağıdaki değişkenleri ekleyin:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://vimhmfklifdcklfbtfsi.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZpbWhtZmtsaWZkY2tsZmJ0ZnNpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2MDc5MDksImV4cCI6MjA5MjE4MzkwOX0.NYSUB3DbOosqjorevM5XbS3WE-K_ykQteqY6Ls2FegI
+   ```
+
+5. **Deploy**:
+   - "Deploy" butonuna tıklayın
+   - Vercel otomatik olarak Next.js uygulamanızı build edip yayına alacak
+   - Birkaç dakika içinde siteniz yayında olacak
+
+6. **Supabase Tablosu Oluşturun**:
+   - Supabase dashboard'ınıza gidin
+   - SQL Editor'ü açın
+   - `supabase-setup.sql` dosyasındaki SQL kodunu çalıştırın
+   - RLS politikaları ekleyin (SQL dosyasında mevcut)
+
+### Vercel CLI ile Deploy (Alternatif)
+
+```bash
+# Vercel CLI yükleyin
+npm i -g vercel
+
+# Projenizi deploy edin
+vercel
+
+# Environment variables ekleyin
+vercel env add NEXT_PUBLIC_SUPABASE_URL
+vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+# Production'a deploy edin
+vercel --prod
+```
+
+### Önemli Notlar
+
+- Supabase URL ve ANON KEY'i environment variable olarak eklemeyi unutmayın
+- Supabase'te `calendar_entries` tablosu oluşturulmalıdır
+- RLS (Row Level Security) politikaları ayarlanmalıdır
+- Vercel otomatik HTTPS sağlar
+- Domain'i Vercel dashboard'ından özelleştirebilirsiniz
+
 ## Lisans
 
 MIT
